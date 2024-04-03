@@ -19,7 +19,7 @@
         <script type="text/babel" data-type="module" >
             import React, { useEffect, useState, StrictMode, useRef } from 'react';
             import { createRoot } from 'react-dom/client';
-            function MakeBouncers() {
+            function BounceBalls() {
                 const canvasRef = useRef(null);
                 
                 const [bouncers, setBouncers] = useState ([{
@@ -39,7 +39,7 @@
                         setBouncers(json);
                     };
                     
-                    const timeInterval = setInterval(getBouncers,100);
+                    const timeInterval = setInterval(getBouncers,17);
                     //return a function to clean up if the user leaves the page
                     return () => clearInterval(timeInterval);
                 },[])
@@ -59,7 +59,7 @@
             }
             const container = document.getElementById('root');
             const root = createRoot(container);
-            root.render(<MakeBouncers />);
+            root.render(<BounceBalls />);
         </script>
         
     </body>
