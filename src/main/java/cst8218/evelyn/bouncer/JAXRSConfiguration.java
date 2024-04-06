@@ -15,7 +15,7 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("resources")
 @BasicAuthenticationMechanismDefinition
 @DatabaseIdentityStoreDefinition(
-   dataSourceLookup = "${'java:comp/DefaultDataSource'}",
+   dataSourceLookup = "${'java:app/MariaDB'}",
    callerQuery = "#{'select password from app.appuser where userid = ?'}",
    groupsQuery = "select groupname from app.appuser where userid = ?",
    hashAlgorithm = PasswordHash.class,
