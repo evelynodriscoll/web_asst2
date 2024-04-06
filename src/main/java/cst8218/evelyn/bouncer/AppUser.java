@@ -6,6 +6,9 @@
 package cst8218.evelyn.bouncer;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import javax.enterprise.inject.Instance;
+import javax.enterprise.inject.spi.CDI;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.security.enterprise.identitystore.PasswordHash;
+import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -69,11 +74,23 @@ public class AppUser implements Serializable {
     }
 
     public String getPassword() {
-        return password;
+        return "";
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        
+        // initialize a PasswordHash object which will generate password hashes
+        Instance<? extends PasswordHash> instance = CDI.current().select(Pbkdf2PasswordHash.class);
+        PasswordHash passwordHash = instance.get();
+        passwordHash.initialize(new HashMap<String,String>()); // todo: are the defaults good enough?
+        // now we can generate a password entry for a given password
+        String passwordEntry = password; //pretend the user has chosen a password mySecretPassword
+        passwordEntry = passwordHash.generate(passwordEntry.toCharArray());
+        //at this point, passwordEntry refers to a salted/hashed password entry corresponding to mySecretPassword
+        
+        if(password.length() > 0) {
+            this.password = passwordEntry;
+        }
     }
 
     @Override
