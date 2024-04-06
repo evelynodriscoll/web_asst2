@@ -48,7 +48,7 @@ public class Bouncer implements Serializable {
      * The yVelocity (and thus the yValue) reverses direction when it bounces off the bottom or top wall (y = 0 or y = 600).
      */
     public void advanceOneFrame() {
-        
+        /*
         if (yVelocity >= 0 && y < F_HEIGHT) {
             yVelocity += GRAVITY_ACCEL; // if velocity is not zero, accelerate
         }
@@ -60,8 +60,37 @@ public class Bouncer implements Serializable {
             y += yVelocity;
         } else if (y <= 0) {
             yVelocity = -yVelocity - DECAY_RATE;    //when the bouncer hits the top wall
-            y += yVelocity;                        //reverse velocity and add decay
-    }
+            y += yVelocity;  //reverse velocity and add decay
+        }
+        */
+        //When reaching the top or bottom inverts the velocity
+        if(y == 0 || y == F_HEIGHT){
+            yVelocity *= -1;
+        }
+        //If yVelocity is too fast it is reset
+        if(yVelocity > 60) yVelocity = 15;
+        if(yVelocity < -60) yVelocity = -15;
+        
+        //When y is negative and greater than 1 then the velocity is slowed
+        if(yVelocity < 0 && -yVelocity > GRAVITY_ACCEL){
+            yVelocity += DECAY_RATE;
+        }
+        //When yVelocity is positive then velocity is increased
+        if(yVelocity > 0){
+            yVelocity += GRAVITY_ACCEL;
+        }
+        //Moves the bouncer up and down
+        y += yVelocity;
+        
+        //When y gets below 0 y is set to 0
+        if(y < 0){
+            y = 0;
+        }
+        //When F_HEIGHT is exceeded y is set to F_HEIGHT
+        if(y > F_HEIGHT){
+            y = F_HEIGHT;
+        }
+        
 }
     
     /**
