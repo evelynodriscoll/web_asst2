@@ -7,6 +7,8 @@ package service;
 
 import cst8218.evelyn.bouncer.entity.Bouncer;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +28,8 @@ import javax.ws.rs.core.Response;
  * @author Evelyn O'Driscoll
  * This class holds the HTTP methods from the REST API that allow the user to get information about the entity or create, delete and update objects.
  */
+
+@DeclareRoles({"Admin", "ApiGroup"})
 @Stateless
 @Path("cst8218.evelyn.bouncer.entity.bouncer")
 public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
@@ -49,6 +53,7 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
      */
     @DELETE
     @Path("{id}")
+    @RolesAllowed({"Admin", "ApiGroup"})
     public Response removeBouncer(@PathParam("id") Long id) {  //delete a Bouncer
         super.remove(super.find(id));
         return Response.noContent().build();
@@ -63,6 +68,7 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RolesAllowed({"Admin", "ApiGroup"})
     public Response findBouncer(@PathParam("id") Long id) {                //find a Bouncer by ID
         Bouncer bouncer = super.find(id);
         if (bouncer != null) {
@@ -79,6 +85,7 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})      //get a list of all Bouncers
+    @RolesAllowed({"Admin", "ApiGroup"})
     public Response findAllBouncers() {
         List<Bouncer> bouncers = super.findAll();
         if (!bouncers.isEmpty()) {
@@ -97,7 +104,8 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
      */
     @GET
     @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})                                 //find all Bouncers within a range of IDs
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})  
+    @RolesAllowed({"Admin", "ApiGroup"})//find all Bouncers within a range of IDs
     public Response findRangeBouncers(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         List<Bouncer> bouncers = super.findRange(new int[]{from, to});
         if (!bouncers.isEmpty()) {
@@ -115,6 +123,7 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
     @GET
     @Path("countBouncers")               //return number of Bouncers
     @Produces(MediaType.TEXT_PLAIN)
+    @RolesAllowed({"Admin", "ApiGroup"})
     public Response countBouncers() {
         int count = super.count();
         return Response.ok(count).build();
@@ -128,6 +137,7 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
      */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RolesAllowed({"Admin", "ApiGroup"})
     public Response createBouncer(Bouncer b) {                           //create a new bouncer
         if (b.getId() == null) { 
           
@@ -153,6 +163,7 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
     @POST
     @Path("/{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RolesAllowed({"Admin", "ApiGroup"})
     public Response updateBouncer(@PathParam("id") Long id, Bouncer newBouncer) {              //update some fields of an existing Bouncer
         Bouncer oldBouncer = super.find(id);
         if (oldBouncer == null) {
@@ -176,6 +187,7 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
     @PUT
     @Path("/{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @RolesAllowed({"Admin", "ApiGroup"})
     public Response updateBouncerPUT(@PathParam("id") Long id, Bouncer newBouncer) { //overwrite an old Bouncer completely
         Bouncer oldBouncer = super.find(id);
         
@@ -194,5 +206,4 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
     }
 }
     
-     
-
+    
