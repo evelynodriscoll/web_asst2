@@ -30,10 +30,13 @@
                 useEffect(
                 () => {
                     async function getBouncers() {
+                        let user = JSON.parse(localStorage.getItem('user'));
                         let result = await fetch ("http://localhost:8080/web_asst2/resources/cst8218.evelyn.bouncer.entity.bouncer",
                             {
                                 method: 'GET',
-                                headers: {'Accept': 'application/json'}
+                                headers: {'Accept': 'application/json',
+                                'Authorization': 'Basic ' + btoa('Ev:abc123')
+                                }
                             });
                         const json = await result.json();
                         setBouncers(json);
