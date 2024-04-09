@@ -6,7 +6,7 @@
         <property name="portNumber" value="3306"/>
         <property name="databaseName" value="CST8218"/>
         <property name="User" value="root"/>
-        <property name="Password" value="Eo001248?"/>
+        <property name="Password" value="admin1"/>
         <property name="URL" value="jdbc:mysql://localhost:3306/CST8218?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
     </jdbc-connection-pool>

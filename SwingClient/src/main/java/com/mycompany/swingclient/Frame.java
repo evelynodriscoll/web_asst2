@@ -173,7 +173,7 @@ public class Frame extends javax.swing.JFrame {
         String mapAsString = mapToString(parameters); // convert user input to json string representation
        
         try {
-            String endpoint = "http://localhost:8080/bouncer-putnik/resources/cst8218.michael.bouncer.entity.bouncer/" + id.getText().trim();
+            String endpoint = "http://localhost:8080/web_asst2/resources/cst8218.evelyn.bouncer.entity.bouncer/" + id.getText().trim();
             URL url = new URL(endpoint);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("PUT");
