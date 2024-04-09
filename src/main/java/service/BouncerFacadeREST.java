@@ -105,7 +105,7 @@ public class BouncerFacadeREST extends AbstractFacade<Bouncer> {
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})  
-    @RolesAllowed({"Admin", "ApiGroup"})//find all Bouncers within a range of IDs
+    @RolesAllowed({"Admin", "ApiGroup"})
     public Response findRangeBouncers(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         List<Bouncer> bouncers = super.findRange(new int[]{from, to});
         if (!bouncers.isEmpty()) {
