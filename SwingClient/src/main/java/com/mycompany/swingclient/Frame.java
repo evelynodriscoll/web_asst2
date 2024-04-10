@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -179,6 +180,9 @@ public class Frame extends javax.swing.JFrame {
             con.setRequestMethod("PUT");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Accept", "application/json");
+            String auth = "Ev:abc123";
+            String basicAuth = "Basic :" + new String(Base64.getEncoder().encode(auth.getBytes()));
+            con.setRequestProperty("Authorization",  basicAuth);
             con.setDoOutput(true);
             
             try(OutputStream out = con.getOutputStream()) {
